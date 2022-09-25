@@ -26,13 +26,8 @@ const response = await fetch(`https://api.apilayer.com/exchangerates_data/latest
   setExchange(data.rates[symbols]);
   console.log(exchange)
 } catch(error) {console.log('error', error)};
-
-  
-    
-
     result = amount / exchange;
 console.log(amount, exchange, result)
-    setResult = result;
 }
 
 
