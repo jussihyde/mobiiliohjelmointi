@@ -9,6 +9,10 @@ export default function App() {
   const [inputLat, setInputLat] = useState(0);
   const [inputLng, setInputLng] = useState(0);
   const [KEY] = useState('5VlJ5p0GNTZpNXquVkoUtj4KwJPBRLkE')
+  const [startLat, setStartLat] = useState(60.500000);
+  const [startLng, setStartLng] = useState(25.000000);
+  const [inputLatD, setInputLatD] = useState(1.0000);
+  const [inputLngD, setInputLngD] = useState(1.0000);
 
   const getAddress = async () => {
     try {
@@ -16,6 +20,11 @@ export default function App() {
       const data = await response.json();
       setInputLat(data.results[0].locations[0].latLng.lat)
       setInputLng(data.results[0].locations[0].latLng.lng)
+      setStartLat(data.results[0].locations[0].latLng.lat)
+      setStartLng(data.results[0].locations[0].latLng.lng)
+      setInputLatD(0.0033)
+      setInputLngD(0.0033)
+
      } catch(error) {
           
         };
@@ -26,18 +35,20 @@ export default function App() {
     longitude: inputLng
   };
 
+  const startLocation = {
+    latitude: startLat,
+    longitude: startLng,
+    latitudeDelta: inputLatD,
+    longitudeDelta: inputLngD,
+  };
+
   return (
     <View style={styles.container}>
       
       <MapView 
         style={{ flex: 1, width: "100%",
         height: "100%" }}
-        initialRegion={{
-          latitude: 60.500000,
-          longitude: 25.000000,
-          latitudeDelta: 1.0000,
-          longitudeDelta: 1.0000,
-        }}>
+        region={startLocation}>
         <Marker
         coordinate={inputLocation}
           title='Your location' />

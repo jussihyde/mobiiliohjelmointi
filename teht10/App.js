@@ -10,6 +10,11 @@ export default function App() {
   const [inputLat, setInputLat] = useState(0);
   const [inputLng, setInputLng] = useState(0);
   const [KEY] = useState('5VlJ5p0GNTZpNXquVkoUtj4KwJPBRLkE')
+  const [location, setLocation] = useState(null); 
+  const [startLat, setStartLat] = useState(0);
+  const [startLng, setStartLng] = useState(0);
+  const [inputLatD, setInputLatD] = useState(1.0000);
+  const [inputLngD, setInputLngD] = useState(1.0000);
 
   const getAddress = async () => {
     try {
@@ -17,6 +22,10 @@ export default function App() {
       const data = await response.json();
       setInputLat(data.results[0].locations[0].latLng.lat)
       setInputLng(data.results[0].locations[0].latLng.lng)
+      setStartLat(data.results[0].locations[0].latLng.lat)
+      setStartLng(data.results[0].locations[0].latLng.lng)
+      setInputLatD(0.0033)
+      setInputLngD(0.0033)
      } catch(error) {
       Alert.alert(error)
         };
@@ -28,9 +37,7 @@ export default function App() {
   };
 
   
-  const [location, setLocation] = useState(null); 
-  const [startLat, setStartLat] = useState(0);
-  const [startLng, setStartLng] = useState(0);
+  
 
   const locationBasis = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -53,8 +60,8 @@ export default function App() {
   const startLocation = {
       latitude: startLat,
       longitude: startLng,
-      latitudeDelta: 1.0000,
-      longitudeDelta: 1.0000,
+      latitudeDelta: inputLatD,
+      longitudeDelta: inputLngD,
     };
 
   return (
